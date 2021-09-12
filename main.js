@@ -71,6 +71,13 @@ const generateScoreCard = () => {
     }
     htmlContent += `</tr>`
 
+    // Add entry for -1 incase of mistake
+    htmlContent += "<tr>"
+    for (let i = 1; i <= numberOfPlayers; i++) {
+        htmlContent += generateColumnButton(i, -1);
+    }
+    htmlContent += `</tr>`
+
 
     // Set values in HTML
     document.getElementById("scoreCard").innerHTML = htmlContent;
@@ -90,7 +97,11 @@ const generateScoreCard = () => {
 }
 
 const generateColumnButton = (playerNumber, scoreValue) => {
-    return `<td><div class="d-grid gap-2"><button onclick="incrementPlayerScore(${playerNumber}, ${scoreValue})" type="button" class="btn btn-light">+${scoreValue}</button></div></td>`
+    let symbol = ""
+    if (scoreValue > 0) {
+        symbol = "+"
+    }
+    return `<td><div class="d-grid gap-2"><button onclick="incrementPlayerScore(${playerNumber}, ${scoreValue})" type="button" class="btn btn-light">${symbol}${scoreValue}</button></div></td>`
 }
 
 window.onload = () => {
